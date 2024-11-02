@@ -11,9 +11,14 @@ import org.springframework.stereotype.Repository;
 import com.example.shipment_model.model.Shipment;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 
 @Repository
 public class ShipmentRepo {
+	
+	@PersistenceContext
+	private EntityManager em;
 	
 	private SessionFactory sf=new Configuration().configure().buildSessionFactory();
 
@@ -27,6 +32,11 @@ public class ShipmentRepo {
 		
 
 	}
+//	@Transactional
+//	public Shipment getShipmentByTn(String trackNo) {
+//		return em.createQuery("from Shipment where trackNo = :trackNo",Shipment.class).setParameter("trackNo", trackNo).getSingleResult();
+//	}
+
 
 	public String deleteShip(Integer shipId) {
 		// TODO Auto-generated method stub
@@ -41,6 +51,22 @@ public class ShipmentRepo {
 			return null;
 		}
 	}
+//	@Transactional
+//	public String deleteShip(Integer shipId) {
+//		
+//			Shipment s=em.find(Shipment.class, shipId);
+//			if(s != null) {
+//				em.remove(s);
+//				return "deleted";
+//			}else {
+//				return null;
+//			}
+//		
+//		
+//	}
+	
+
+	
 
 	@SuppressWarnings("deprecation")
 	public String addShip(Shipment ship) {
@@ -56,6 +82,31 @@ public class ShipmentRepo {
 			return null;
 		}
 	}
+	
+//for ADD
+//	@Transactional
+//	public String addShip(Shipment ship) {
+//		try {
+//		em.persist(ship);
+//		return "add";
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//			return null;
+//		}
+//	}
+//for Update
+//	@Transactional
+//	public String addShip(Shipment ship) {
+//		try {
+//			em.merge(ship);
+//			return "updated";
+//		}catch(Exception e) {
+//			return null;
+//		}
+//	}
+	
+	
+
 
 	public List<Shipment> getShipment() {
 		// TODO Auto-generated method stub
@@ -65,6 +116,11 @@ public class ShipmentRepo {
 		tr.commit();
 		return list;
 	}
+//for getting all records
+//	@Transactional
+//	public List<Shipment> getShipment() {
+//		return em.createQuery("from Shipment",Shipment.class).getResultList();
+//	}
 
 	public String addMulShip(List<Shipment> ship) {
 		// TODO Auto-generated method stub
@@ -83,6 +139,17 @@ public class ShipmentRepo {
 			}
 		
 	}
+	
+//for adding multiple records
+//	@Transactional
+//	public String addMulShip(List<Shipment> ship) {
+//		for(Shipment ships:ship) {
+//			em.persist(ships);
+//			
+//		}
+//		return "added";
+//	}
+
 	
 	
 	
