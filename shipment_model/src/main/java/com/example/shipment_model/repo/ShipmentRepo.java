@@ -139,6 +139,20 @@ public class ShipmentRepo {
 			}
 		
 	}
+
+
+	public String modifyTnSi(Shipment ship) {
+		// TODO Auto-generated method stub
+		try{
+			Session session=sf.openSession();
+		Transaction tr=session.beginTransaction();
+		session.saveOrUpdate(ship); 
+		return "Added";
+		}catch(Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 //for adding multiple records
 //	@Transactional

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.shipment_model.model.Message;
 import com.example.shipment_model.model.Shipment;
 import com.example.shipment_model.service.ShipmentService;
 
@@ -23,13 +25,15 @@ public class ShipmentController {
 	private ShipmentService shipService;
 	
 	@GetMapping("/shipment")
-	public ResponseEntity<List<Shipment>> getShipment(){
+	public ResponseEntity<?> getShipment(){
 		List<Shipment> ship=shipService.getShipment();
 		if(ship != null) {
 			return ResponseEntity.ok(ship);
 		}
 		else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+			Message msg=new Message();
+			msg.setMessage("could not able to fetch list of shipment records");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg);
 		}
 	}
 	
@@ -84,6 +88,15 @@ public class ShipmentController {
 		}else {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("not added");
 		}	
+	}
+	
+	@PostMapping
+	public ResponseEntity<?> modifyTnSi(String trackNo,int shipId){
+		Shipment ship=new Shipment();
+		ship.setTrackNo(trackNo);
+		ship.setShipId(shipId);
+		String res=shipService.modifyTnSi(ship);
+		return ResponseEntity.ok("changed");
 	}
 	
 	

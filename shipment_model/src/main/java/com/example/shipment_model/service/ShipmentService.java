@@ -43,4 +43,10 @@ public class ShipmentService {
 		return shipRepo.addMulShip(ship);
 	}
 
+	public String modifyTnSi(Shipment ship) {
+		
+		// TODO Auto-generated method stub
+		return shipRepo.modifyTnSi(ship);
+	}
+
 }
